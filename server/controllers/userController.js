@@ -40,24 +40,12 @@ export const register = async (req, res, next) => {
       next(ex);
     }
   };
-
-export const setAvatar = async (req, res, next) => {
+  export const allusers = async (req, res, next) => {
     try {
-      const userId = req.params.id;
-      const avatarImage = req.body.image;
-      const userData = await User.findByIdAndUpdate(
-        userId,
-        {
-          isAvatarImageSet: true,
-          avatarImage,
-        },
-        { new: true }
-      );
-      return res.json({
-        isSet: userData.isAvatarImageSet,
-        image: userData.avatarImage,
-      });
+      const users=await User.find({_id:{$ne:req.params.id}}).select(["email","username","_id"]);//ne to exclude that id 
+      return res.json({  users });
     } catch (ex) {
+        console.log(ex);
       next(ex);
     }
   };
