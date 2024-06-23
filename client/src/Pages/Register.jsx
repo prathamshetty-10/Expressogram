@@ -3,11 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {toast} from "react-hot-toast";
 import logo from '../assets/logo.svg'
-import registerRoute from '../utils/APIRoutes.js'
+import {registerRoute} from '../utils/APIRoutes.js'
 import axios from "axios";
+import { useEffect } from "react";
 function Register(){
-
-    
     const navigate=useNavigate();
     
     const [signupData,setSignupData]=useState({
@@ -26,7 +25,7 @@ function Register(){
     }
     async function handleSubmit(event){
         event.preventDefault();
-        if(!signupData.email || !signupData.password || signupData.username || !signupData.confirmPassword){
+        if(!signupData.email || !signupData.password || !signupData.username || !signupData.confirmPassword){
             toast.error("Please fill all details");
             return;
 
@@ -58,39 +57,23 @@ function Register(){
             toast.error(data.msg);
           }
           if (data.status === true) {
-            localStorage.setItem(
-              process.env.REACT_APP_LOCALHOST_KEY,
-              JSON.stringify(data.user)
-            );
+            localStorage.setItem('expressogram-user',JSON.stringify(data.user));
+            toast.message('suggessfull registration')
             navigate("/");
-          }
-
-        
-       
-        
-        
-        //const response=await dispatch(createAccount(formData));
-        
-           
-
-        
-        setSignupData({
+            setSignupData({
                 username:"",
                 email:"",
                 password:"",
                 confirmPassword:"",
-        });
-       
+            });
+          }
         
-
             }
-
-            
-           
-            
-
-
-    
+            useEffect(() => {
+                if (localStorage.getItem('expressogram-user')) {
+                  navigate("/chat");
+                }
+              }, []); 
     return ( <div className="h-[100vh] w-[100vw] bg-[#131324] flex items-center justify-center">
     <form onSubmit={handleSubmit} className="bg-[#00000076] flex flex-col rounded-3xl px-[4rem] pt-[2.5rem] pb-[2rem] shadow-[0_0_5px_gray]">
         <div className="flex">
@@ -100,9 +83,9 @@ function Register(){
         <input type="text" placeholder="Enter UserName" name="username" value={signupData.username} onChange={handleUserInput} className="bg-transparent p-[1rem] border-[0.1rem] border-[#4e0eff] rounded-2xl font-[1rem] text-white w-[100%] my-[1rem]"/>
         <input type="email" placeholder="Enter Email" name="email" value={signupData.email} onChange={handleUserInput} className="bg-transparent p-[1rem] border-[0.1rem] border-[#4e0eff] rounded-2xl font-[1rem] text-white w-[100%] mb-[1rem]"/>
         <input type="password" placeholder="Enter password" name="password" value={signupData.password} onChange={handleUserInput} className="bg-transparent p-[1rem] border-[0.1rem] border-[#4e0eff] rounded-2xl font-[1rem] text-white w-[100%] mb-[1rem]"/>
-        <input type="password" placeholder="Confirm password" name="ConfirmPassword" value={signupData.confirmPassword} onChange={handleUserInput} className="bg-transparent p-[1rem] border-[0.1rem] border-[#4e0eff] rounded-2xl font-[1rem] text-white w-[100%] mb-[1.5rem]"/>
+        <input type="password" placeholder="confirm password" name="confirmPassword" value={signupData.confirmPassword} onChange={handleUserInput} className="bg-transparent p-[1rem] border-[0.1rem] border-[#4e0eff] rounded-2xl font-[1rem] text-white w-[100%] mb-[1.5rem]"/>
         <button type="submit" className="bg-[#997af0] hover:bg-[#4e0eff] p-[1rem] border-[0.1rem]  rounded-2xl font-[1rem] text-white w-[100%] mb-[0.5rem] ">Click</button>
-        <span className="text-white mx-[1rem]">Already have an account??   <Link to="/login" className="text-blue-500">Login</Link></span>
+        <span className="text-white mx-[1rem]">Already have an account??   <Link to="/" className="text-blue-500">Login</Link></span>
     
     
     </form>
