@@ -41,19 +41,19 @@ function Login(){
           }
           if (data.status === true) {
             localStorage.setItem('expressogram-user',JSON.stringify(data.user));
-            toast.success('suggessfull registration')
-            navigate("/");
+            toast.success('suggessfull login')
+            navigate("/chat");
             setLoginData({
                 username:"",
-                email:"",
+                
                 password:"",
-                confirmPassword:"",
+                
             });
           }
         
             }
             useEffect(() => {
-                
+               
                 if (localStorage.getItem('expressogram-user')) {
                   navigate("/chat");
                 }

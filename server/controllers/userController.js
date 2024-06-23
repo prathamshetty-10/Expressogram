@@ -43,7 +43,8 @@ export const register = async (req, res, next) => {
   export const allusers = async (req, res, next) => {
     try {
       const users=await User.find({_id:{$ne:req.params.id}}).select(["email","username","_id"]);//ne to exclude that id 
-      return res.json({  users });
+      
+      return res.json({status:true,users });
     } catch (ex) {
         console.log(ex);
       next(ex);
