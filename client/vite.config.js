@@ -8,6 +8,11 @@ export default defineConfig({
     postcss: {
       plugins: [tailwindcss()],
     },
+  },
+  resolve: {
+    alias: {
+      process: "process/browser"
+    }
   }
 })
 

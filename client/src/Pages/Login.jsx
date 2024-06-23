@@ -41,7 +41,7 @@ function Login(){
           }
           if (data.status === true) {
             localStorage.setItem('expressogram-user',JSON.stringify(data.user));
-            toast.message('suggessfull registration')
+            toast.success('suggessfull registration')
             navigate("/");
             setLoginData({
                 username:"",
@@ -53,7 +53,7 @@ function Login(){
         
             }
             useEffect(() => {
-                localStorage.clear();
+                
                 if (localStorage.getItem('expressogram-user')) {
                   navigate("/chat");
                 }

@@ -58,7 +58,7 @@ function Register(){
           }
           if (data.status === true) {
             localStorage.setItem('expressogram-user',JSON.stringify(data.user));
-            toast.message('suggessfull registration')
+            toast.success('suggessfull registration')
             navigate("/");
             setSignupData({
                 username:"",
