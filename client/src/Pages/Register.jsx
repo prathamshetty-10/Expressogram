@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {toast} from "react-hot-toast";
 import logo from '../assets/logo.svg'
+import registerRoute from '../utils/APIRoutes.js'
+import axios from "axios";
 function Register(){
 
     
@@ -24,10 +26,15 @@ function Register(){
     }
     async function handleSubmit(event){
         event.preventDefault();
-        if(!signupData.email || !signupData.password || !username.fullName || !signupData.confirmpassword){
+        if(!signupData.email || !signupData.password || signupData.username || !signupData.confirmPassword){
             toast.error("Please fill all details");
             return;
 
+        }
+        if(signupData.password!= signupData.confirmPassword){
+            toast.error("Password does not match ");
+            return ;
+            
         }
         //checking name field length
         if(signupData.username.length<3){
@@ -41,8 +48,23 @@ function Register(){
         }
         //password validating
         if(!signupData.password.match( /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)){
-            toast.error("password must be 6-16 character long with atleast one number and one special character")
+            toast.error("password must be 6-16 character long with atleast one number and one special character");
+            return;
         }
+
+        const { data } = await axios.post(registerRoute,signupData);
+    
+          if (data.status === false) {
+            toast.error(data.msg);
+          }
+          if (data.status === true) {
+            localStorage.setItem(
+              process.env.REACT_APP_LOCALHOST_KEY,
+              JSON.stringify(data.user)
+            );
+            navigate("/");
+          }
+
         
        
         
@@ -62,6 +84,8 @@ function Register(){
         
 
             }
+
+            
            
             
 
