@@ -41,7 +41,7 @@ function Chat(){
             </div>
             <div className="w-[75%]">
             {currentChat===undefined?(
-            <Welcome currentuser={currentuser}/>):(<Chatcontainer currentuser={currentuser}/>)}
+            <Welcome currentuser={currentuser}/>):(<Chatcontainer currentuser={currentuser} currentChat={currentChat}/>)}
             
             </div>
         
