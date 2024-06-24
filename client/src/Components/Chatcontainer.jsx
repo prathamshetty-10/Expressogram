@@ -3,9 +3,15 @@ import profile from '../assets/836.jpg'
 import Logout from "./Logout";
 import ChatInput from "./ChatInput";
 import Messages from "./Messages";
+import axios from "axios";
+import {sendMessageRoute} from '../utils/APIRoutes.js'
 function Chatcontainer({currentuser,currentChat}){
     const handleSendMessage=async(msg)=>{
-        console.log('hi');
+        await axios.post(sendMessageRoute,{
+            from:currentuser._id,
+            to:currentChat._id,
+            message:msg,
+        })
     }
     return(
         <div className="max-h-[100%] overflow-hidden ">

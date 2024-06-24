@@ -3,6 +3,7 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import userRoutes from './routes/userRoutes.js'
 import morgan from 'morgan'
+import messageRoutes from './routes/messagesRoute.js'
 mongoose.set('strictQuery',false)
 const app=express();
 import config from 'dotenv'
@@ -16,6 +17,7 @@ app.use(express.urlencoded({extended:true}))
 
 
 app.use('/api/auth',userRoutes);
+app.use('/api/messages',messageRoutes)
 mongoose.connect(process.env.MONGO_URL)
     .then((conn)=>{
         console.log("connected to db:",conn.connection.host);
