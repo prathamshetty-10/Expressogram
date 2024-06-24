@@ -7,8 +7,11 @@ import {allusersRoute} from '../utils/APIRoutes.js'
 import Contacts from "../Components/Contacts.jsx";
 import Welcome from "../Components/Welcome.jsx";
 import Chatcontainer from "../Components/Chatcontainer.jsx";
+import io from 'socket.io-client'
+const socket=io.connect("http://localhost:5000");
 function Chat(){
     const navigate=useNavigate();
+
     const [contacts,setContacts]=useState([]);
     const [currentChat,setCurrentChat]=useState(undefined);
     const [currentuser,setCurrentUser]=useState(JSON.parse(localStorage.getItem("expressogram-user")));
@@ -19,7 +22,8 @@ function Chat(){
         if(currentuser){
             const data=await axios.post(`${allusersRoute}/${currentuser._id}`);
             setContacts(data.data.users);
-            
+            //socket=io.connect("http://localhost:5000");
+            socket.emit('add-user',currentuser._id);
         }
         else{
             navigate("/");
@@ -41,7 +45,7 @@ function Chat(){
             </div>
             <div className="w-[75%]">
             {currentChat===undefined?(
-            <Welcome currentuser={currentuser}/>):(<Chatcontainer currentuser={currentuser} currentChat={currentChat}/>)}
+            <Welcome currentuser={currentuser}/>):(<Chatcontainer currentuser={currentuser} currentChat={currentChat} socket={socket}/>)}
             
             </div>
         

@@ -7,25 +7,48 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import {getMessageRoute, sendMessageRoute} from '../utils/APIRoutes.js'
-function Chatcontainer({currentuser,currentChat}){
+function Chatcontainer({currentuser,currentChat,socket}){
+    const [arrivalMessage,setArrivalmessage]=useState(null);
     const handleSendMessage=async(msg)=>{
         await axios.post(sendMessageRoute,{
             from:currentuser._id,
             to:currentChat._id,
             message:msg,
         })
+        socket.emit("send-msg",{
+            to:currentChat._id,
+            from:currentuser._id,
+            message:msg,
+        })
+        const msgs=[...messages];
+        msgs.push({fromSelf:true,message:msg});
+        setMessages(msgs);
     }
     const [messages,setMessages]=useState([]);
     const func=async()=>{
+        if(currentChat){
         const response=await axios.post(getMessageRoute,{
             from:currentuser._id,
             to:currentChat._id,
         })
-        setMessages(response.data);
+        setMessages(response.data);}
     }
     useEffect(()=>{
         func();
     },[currentChat])
+
+    useEffect(()=>{
+        if(socket){
+            socket.on("msg-receive",(msg)=>{
+                setArrivalmessage({fromSelf:false,message:msg});
+            })
+        }
+    },[])
+    useEffect(()=>{
+        arrivalMessage && setMessages((prev)=>[...prev,arrivalMessage])
+    },[arrivalMessage])
+
+
     return(
         <div className="max-h-[100%] overflow-hidden ">
         
@@ -43,7 +66,7 @@ function Chatcontainer({currentuser,currentChat}){
             {
             messages.map((message)=>{
                 return(
-                <div>
+                <div key={message}>
                     {message.fromSelf?(<div className="text-white flex justify-end items-center w-[100%]  "><div className=" py-[0.5rem] px-[2rem] break-words text-xl rounded-3xl bg-[#9900ff20]">{message.message}</div></div>):(<div className="text-white flex  justify-start items-center w-[100%] "><div className=" py-[0.5rem] px-[2rem] break-words text-xl rounded-3xl bg-[#4f04ff21]">{message.message}</div></div>)
                 }
                 </div>
