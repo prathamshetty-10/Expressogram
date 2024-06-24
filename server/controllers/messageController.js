@@ -20,6 +20,20 @@ export const addMessage = async (req, res, next) => {
   };
 export const getAllMessage = async (req, res, next) => {
     try{
+        const {from,to}=req.body;
+        const messages=await messageModel.find({//get all messages with those from to
+            users:{
+                $all:[from,to],
+            }
+        }).sort({updatedAt:1});
+        //create an object 
+        const projectedMessages=messages.map((msg)=>{ //new array made from messages
+            return{
+                fromSelf:msg.sender.toString()===from,
+                message:msg.message.text
+            };
+        });
+        res.json(projectedMessages);
 
 
     }
