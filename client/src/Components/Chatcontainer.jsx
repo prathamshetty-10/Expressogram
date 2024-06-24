@@ -1,11 +1,12 @@
 import React from "react";
 import profile from '../assets/836.jpg'
-import Logout from "./Logout";
+
 import ChatInput from "./ChatInput";
-import Messages from "./Messages";
+
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
+import ScrollToBottom from "react-scroll-to-bottom";
 import {getMessageRoute, sendMessageRoute} from '../utils/APIRoutes.js'
 function Chatcontainer({currentuser,currentChat,socket}){
     const [arrivalMessage,setArrivalmessage]=useState(null);
@@ -62,12 +63,13 @@ function Chatcontainer({currentuser,currentChat,socket}){
                 </div>
             </div>
 
-            <div className="h-[63vh] py-[1rem] px-[2rem] flex flex-col gap-[1rem] overflow-auto ">
+            <div className="h-[63vh] py-[1rem] px-[2rem] flex flex-col gap-[1rem] ">
+            <ScrollToBottom className="h-[63vh] ">
             {
             messages.map((message)=>{
                 return(
                 <div key={message}>
-                    {message.fromSelf?(<div className="text-white flex justify-end items-center w-[100%]  "><div className=" py-[0.5rem] px-[2rem] break-words text-xl rounded-3xl bg-[#9900ff20]">{message.message}</div></div>):(<div className="text-white flex  justify-start items-center w-[100%] "><div className=" py-[0.5rem] px-[2rem] break-words text-xl rounded-3xl bg-[#4f04ff21]">{message.message}</div></div>)
+                    {message.fromSelf?(<div className="text-white flex justify-end items-center w-[100%] my-[15px] "><div className=" py-[0.5rem] px-[2rem] break-words text-xl rounded-3xl bg-[#9900ff20]">{message.message}</div></div>):(<div className="text-white flex  justify-start items-center w-[100%] my-[15px] "><div className=" py-[0.5rem] px-[2rem] break-words text-xl rounded-3xl bg-[#4f04ff21]">{message.message}</div></div>)
                 }
                 </div>
 
@@ -78,7 +80,7 @@ function Chatcontainer({currentuser,currentChat,socket}){
             
             }
             
-            
+            </ScrollToBottom>
             </div>
             <div>
             <ChatInput handleSendMessage={handleSendMessage} />
