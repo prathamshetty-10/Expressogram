@@ -9,7 +9,7 @@ function Logout(){
         navigate("/");
     }
     return(
-        <button onClick={handleClick} className="flex items-center justify-center p-[0.6rem] bg-[#9a86f3] rounded-3xl text-3xl cursor-pointer hover:bg-[#ebe7ff] hover:text-blue-700">
+        <button onClick={handleClick} className="flex items-center justify-center p-[0.4rem] lg:p-[0.6rem] bg-[#9a86f3] rounded-3xl text-3xl cursor-pointer hover:bg-[#ebe7ff] hover:text-blue-700">
         <BiPowerOff/>
         </button>
     )

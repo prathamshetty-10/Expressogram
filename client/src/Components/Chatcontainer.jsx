@@ -63,13 +63,13 @@ function Chatcontainer({currentuser,currentChat,socket}){
                 </div>
             </div>
 
-            <div className="h-[63vh] py-[1rem] px-[2rem] flex flex-col gap-[1rem] ">
+            <div className="h-[63vh] py-[0.5rem] px-[2rem] flex flex-col gap-[1rem] ">
             <ScrollToBottom className="h-[63vh] ">
             {
             messages.map((message)=>{
                 return(
                 <div key={message}>
-                    {message.fromSelf?(<div className="text-white flex justify-end items-center w-[100%] my-[15px] "><div className=" py-[0.5rem] px-[2rem] break-words text-xl rounded-3xl bg-[#9900ff20]">{message.message}</div></div>):(<div className="text-white flex  justify-start items-center w-[100%] my-[15px] "><div className=" py-[0.5rem] px-[2rem] break-words text-xl rounded-3xl bg-[#4f04ff21]">{message.message}</div></div>)
+                    {message.fromSelf?(<div className="text-white flex justify-end items-center w-[50%] my-[15px] ml-[200px] lg:ml-[420px] "><div className=" max-w-[90%] py-[0.5rem] px-[2rem] break-words lg:text-xl rounded-3xl bg-[#9900ff20]">{message.message}</div></div>):(<div className="text-white flex  justify-start items-center w-[50%] my-[15px] "><div className=" max-w-[90%] py-[0.5rem] px-[2rem] break-words lg:text-xl rounded-3xl bg-[#4f04ff21]">{message.message}</div></div>)
                 }
                 </div>
 
