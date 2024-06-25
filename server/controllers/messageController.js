@@ -21,7 +21,7 @@ export const addMessage = async (req, res, next) => {
 export const getAllMessage = async (req, res, next) => {
     try{
         const {from,to}=req.body;
-        const messages=await messageModel.find({//get all messages with those from to
+        const messages=await messageModel.find({//get all messages with those from to and to from 
             users:{
                 $all:[from,to],
             }

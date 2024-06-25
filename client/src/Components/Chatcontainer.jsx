@@ -40,13 +40,19 @@ function Chatcontainer({currentuser,currentChat,socket}){
 
     useEffect(()=>{
         if(socket){
-            socket.on("msg-receive",(msg)=>{
-                setArrivalmessage({fromSelf:false,message:msg});
+            socket.on("msg-receive",(data)=>{
+                setArrivalmessage({fromSelf:false,message:data.message,from:data.from});
             })
         }
     },[])
     useEffect(()=>{
-        arrivalMessage && setMessages((prev)=>[...prev,arrivalMessage])
+        if(arrivalMessage){ 
+            if(arrivalMessage.from==currentChat._id){
+             const newmsg={
+                fromSelf:false,
+                message:arrivalMessage.message
+             }
+             setMessages((prev)=>[...prev,newmsg])}}
     },[arrivalMessage])
 
 

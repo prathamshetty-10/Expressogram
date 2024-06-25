@@ -55,7 +55,7 @@ io.on("connection",(socket)=>{
         const sendUserSocket=onlineUsers.get(data.to);//checking user online or not
         if(sendUserSocket){//emitting to all online users//offline users will get it on refresh
             console.log(`emmiting received data ${data.message} to ${sendUserSocket}`)
-            socket.to(sendUserSocket).emit("msg-receive",data.message);
+            socket.to(sendUserSocket).emit("msg-receive",data);
         }
     })
     
